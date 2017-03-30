@@ -89,4 +89,38 @@ br-273f1381003b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 ```
 
+## Milestone 3
+- [ ] Hello, Metasploit
+Metasploit is an exploitation framework. One of the most popular tools in Kali,
+it's the free part of a larger, commercial project used widely in web security 
+penetration testing. And by hackers. If wpscan is a dental pick, Metasploit is 
+a set of carving knives.
+
+Metasploit currently has over 1600 exploits, organized in different categories 
+like:
+
+* Browser-based: a large collection of (mostly) remote code execution exploits
+* Mobile: Android, iOS
+* OS-specific: Linux, Windows, Solaris, etc.
+* Combinations of the above
+
+Metasploit currently has hundreds of payloads. Some of them are:
+
+* Command shells, enabling attackers to run scripts or arbitrary commands 
+against a host
+* Meterpreter payloads, enabling attackers to control the screen of a device 
+using VNC and to browse, upload and download files
+* Dynamic payloads, enabling attackers to evade anti-virus defenses by 
+generating unique payloads
+
+For this attack, we'll be using Meterpreter to open a shell into the target 
+machine. 
+[Read more about Meterpreter her
+e](https://www.offensive-security.com/metasploit-unleashed/about-meterpreter/)
+
+First, though, some setup. Start by updating Metasploit:
+```
+$ msfupdate
+```
+
 
