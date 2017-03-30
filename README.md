@@ -293,8 +293,7 @@ meterpreter > cat index.php
 `meterpreter >` using the `edit <file>` command. Use this to alter one of the PHP
 files in some subtle, tasteful way. 
 
-# > [Meterpreter CheatShee
-t](https://null-byte.wonderhowto.com/how-to/hack-like-pro-ultimate-command-cheat-sheet-for-metasploits-meterpreter-0149146/)
+# > [Meterpreter CheatSheet](https://null-byte.wonderhowto.com/how-to/hack-like-pro-ultimate-command-cheat-sheet-for-metasploits-meterpreter-0149146/)
 
 And that's pretty much game over for this scenario. Once an attacker is able to
 gain this level of access, a whole universe of options suddenly opens up. If
