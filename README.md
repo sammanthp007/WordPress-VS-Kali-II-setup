@@ -115,12 +115,33 @@ generating unique payloads
 
 For this attack, we'll be using Meterpreter to open a shell into the target 
 machine. 
-[Read more about Meterpreter her
-e](https://www.offensive-security.com/metasploit-unleashed/about-meterpreter/)
+[Read more about Meterpreter 
+here](https://www.offensive-security.com/metasploit-unleashed/about-meterpreter/)
 
 First, though, some setup. Start by updating Metasploit:
 ```
 $ msfupdate
 ```
+
+Metasploit uses a database to manage exploit/payload information and also 
+attack data. So you need to initialize the DB, then load the console:
+```
+$ service postgresql start
+$ msfdb init
+$ msfconsole
+```
+
+Fun fact: you get different ASCII art every time. And they say hackers don't 
+care about UX. Note the command prompt has changed to `msf >`. You are now in a
+shell within another shell within a container.
+
+First check that the DB is connected OK. The DB isn't strictly necessary but 
+MSF runs faster with it.
+```
+db_status
+
+db_rebuild_cache
+```
+Now we are ready.
 
 
