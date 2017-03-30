@@ -34,7 +34,7 @@ docker-compose up -d --force-recreate
 ```
 
 ## Milestone 1
-- [ ] Opening an Attack Surface
+- [x] Opening an Attack Surface
 1. In the WP admin console, go to the plugins page
 2. Search for `reflex gallery` and you should see **Reflex Gallery >> WordPress
 Photo Gallery**
@@ -45,11 +45,16 @@ Looks like 3.1.4 fixed a critical security issue (those are the best kind), so
 we should use 3.1.3. But you cannot use the convenient install button, because 
 WP only lets you install the latest. You'll need to install it manually.
 
-1. On the right side of the dialog, where it lists the compatibility and installs 
-data, click the WordPress.org Plugin Page » link
-2. You'll be taken to the official WP plugin page. Click on the Developers tab
-Under Other Versions, download the 3.1.3 zip file
-3. Go to the manual plugin upload page and upload the zip
-4. Go back to the plugins page, find the plugin, and click Activate
+1. On the right side of the dialog, where it lists the compatibility and 
+installs data, click the WordPress.org Plugin Page » link
+2. You'll be taken to the official WP plugin page. Click on the 
+[Developers tab](https://wordpress.org/plugins/reflex-gallery/developers/)
+3. Under Other Versions, download the 
+[3.1.3 zip file
+](https://downloads.wordpress.org/plugin/reflex-gallery.3.1.3.zip)
+4. Go to the manual plugin upload page and upload the zip
+5. Go back to the plugins page, find the plugin, and click Activate
 
-**Challenge** : Beyond activating the plugin, you need to use it in a page or a post on the WP instance. Create a gallery and use it in a page before proceeding
+**Challenge** : Beyond activating the plugin, you need to use it in a page or 
+a post on the WP instance. Create a gallery and use it in a page before 
+proceeding
