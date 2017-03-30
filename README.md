@@ -146,7 +146,8 @@ db_rebuild_cache
 ```
 Now we are ready.
 
-## Milestone 4: Pwnage
+## Milestone 4: 
+- [x] Pwnage
 In MSF, start by searching the exploit database for something related to the 
 plugin affected by the vulnerability. You could search on several different 
 terms to find something, but in this case, the plugin has an unusual word in 
@@ -253,11 +254,11 @@ echo $HOSTNAME
 
 exit
 ```
-Lines 2, 4, and 6 in above snippet are output. It's a low-fi shell, and
-somewhat limited, but it works, and it's enough to compromise the whole
-machine. We can see we're shell'd in as the www-data user and presently in one
-of the wordpress upload directories, which is where the malicious PHP payload
-was delivered. We can also see the HOSTNAME matches the docker container id.
+It's a low-fi shell, and somewhat limited, but it works, and it's enough to
+compromise the whole machine. We can see we're shell'd in as the www-data user
+and presently in one of the wordpress upload directories, which is where the
+malicious PHP payload was delivered. We can also see the HOSTNAME matches the
+docker container id.
 
 The exit command above gets us back to the meterpreter > prompt,
 which has fewer but more useable commands than the shell. For instance, we can
@@ -285,7 +286,22 @@ meterpreter > cat index.php
 // Silence is golden.
 ```
 
+## Milestone 5
+- [x] Tag it
 
+**Challenge**: Make a change to the WP content. You can open a vi editor from
+`meterpreter >` using the `edit <file>` command. Use this to alter one of the PHP
+files in some subtle, tasteful way. 
+
+# > [Meterpreter CheatShee
+t](https://null-byte.wonderhowto.com/how-to/hack-like-pro-ultimate-command-cheat-sheet-for-metasploits-meterpreter-0149146/)
+
+And that's pretty much game over for this scenario. Once an attacker is able to
+gain this level of access, a whole universe of options suddenly opens up. If
+the machine is configured appropriately, those options may be limited, but this
+is not a position any sysadmin wants be in, even with everything configured
+perfectly. In the best case scenario, the attack surface available to the
+intruder is intolerably large.
 
 
 
