@@ -427,3 +427,8 @@ Hints:
 4. To see what it's doing, try running with high verbosity (-vvvv).
 5. Try CTRL-C and (S)skip if something seems to hangs
 6. When in doubt, accept the default.
+
+Answer(did not work so far):
+```
+sqlmap -u 172.18.0.1:8000/adasdasdthinghere?id=1
+```
