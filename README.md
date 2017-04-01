@@ -71,7 +71,7 @@ So we know the blog is accessible from Kali at localhost:8000, but in this case,
    the IP to use instead by running `ifconfig` and looking for the IP associated
    with eth0:
 
-   ```
+```
    /* for codepath */
    $ ifconfig
    eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -87,8 +87,7 @@ RX packets 60945  bytes 27436247 (26.1 MiB)
     RX errors 0  dropped 0  overruns 0  frame 0
 TX packets 108650  bytes 125750971 (119.9 MiB)
     TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-
-    ```
+```
 
 ## Milestone 3
     - [x] Hello, Metasploit
