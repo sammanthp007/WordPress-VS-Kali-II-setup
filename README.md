@@ -293,7 +293,7 @@ meterpreter > cat index.php
 `meterpreter >` using the `edit <file>` command. Use this to alter one of the PHP
 files in some subtle, tasteful way. 
 
-# > [Meterpreter CheatSheet](https://null-byte.wonderhowto.com/how-to/hack-like-pro-ultimate-command-cheat-sheet-for-metasploits-meterpreter-0149146/)
+> [Meterpreter CheatSheet](https://null-byte.wonderhowto.com/how-to/hack-like-pro-ultimate-command-cheat-sheet-for-metasploits-meterpreter-0149146/)
 
 And that's pretty much game over for this scenario. Once an attacker is able to
 gain this level of access, a whole universe of options suddenly opens up. If
@@ -302,7 +302,17 @@ is not a position any sysadmin wants be in, even with everything configured
 perfectly. In the best case scenario, the attack surface available to the
 intruder is intolerably large.
 
+## Milestone 6
+- [x] Going Deeper
 
+Nobody wants to be a script kiddie, and, sadly, in-memory DLL injection is
+beyond the scope of our skills at this point, but we can at least look at the
+exploit we just used and understand it. The link to the announcement and code
+for this exploit is actually listed as part of the `wpscan` output from Milestone
+2 (rapid7 is the company that sells the commercial version of Metasploit). From
+there, you can get to [the code for this exploit in
+Github.](https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/unix/webapp/wp_reflexgallery_file_upload.rb)
+It's written in Ruby. Don't know Ruby? Doesn't matter. Let's look anyway:
 
 
 
