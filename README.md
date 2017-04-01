@@ -391,7 +391,39 @@ admin/scripts/FileUploader/fileuploader.js files
 ## Milestone 7
 - [x] Hello `sqlmap`
 
+If you think back to all of the Security Shepherd exercises around SQL
+injection, you probably noticed that finding the right combination of characters
+and expressions to use would very often boil down to trial and error, educated
+guesswork, and sometimes dumb luck. Being a coder, you may have thought it'd be
+nice to have a tool that automates all that guessing and testing. Say hello to
+our little friend sqlmap, which does exactly that: given a URL and a parameter
+string, this tool will attempt to identify SQLI-vulnerable parameters by
+systematically trying various SQLI exploits -- pretty much all of them -- and if
+it finds the right way in, it can exfiltrate an entire database.
 
+As such, one of the tricks to using sqlmap is knowing how not to use it. In the
+wrong hands, it becomes an accidental load-testing tool, firing off thousands of
+requests from multiple threads and crashing a database. In the right hands, it
+can identify novel routes for exploitation.
 
+[Read the usage docs on this
+one.](https://github.com/sqlmapproject/sqlmap/wiki/Usage) In addition to the
+standard parameters, make sure you understand `threads`, `risk`, and `level`
+that allow throttling and control how aggressively the tool will run. Try
+different verbosity settings to see what it's actually doing under the hood.
 
+**Challenge** : [Examine this writeup about a recent SQLI vulnerability in a WP
+plugin.](https://packetstormsecurity.com/files/139921/WordPress-Olimometer-2.56-SQL-Injection.html)
+Follow the same process as before to identify the affected version from the
+changelog, install it manually, then recreate the exploit described in the
+writeup using `sqlmap` and confirm the researcher's results.
 
+Hints:
+
+1. Actually [read the usage
+   docs](https://packetstormsecurity.com/files/139921/WordPress-Olimometer-2.56-SQL-Injection.html)
+2. Expect issues, be patient. sqlmap is basically hammering your WP container, which isn't designed to handle a heavy load.
+3. Look at the output carefully, even if there's an error. Does it match the original findings?
+4. To see what it's doing, try running with high verbosity (-vvvv).
+5. Try CTRL-C and (S)skip if something seems to hangs
+6. When in doubt, accept the default.
