@@ -368,17 +368,19 @@ lifting here: the payload is provided (even in encoded form), activating it is a
 single function call, and even the cleanup is provided as a core function. All
 the author had to do here was create and issue a multipart POST request.
 
-** Challenge ** : Now that we've walked through the exploit, go back to the Reflex
+**Challenge** : Now that we've walked through the exploit, go back to the Reflex
 Gallery plugin code and identify the fix --- specifically, what was changed in
 the plugin code to prevent this attack?
 
 Hints:
 
-The plugin is written in PHP and Javascript --- which part would this fix need
+1. The plugin is written in PHP and Javascript --- which part would this fix need
 be in, and why?
-Use the source browser changelog viewer to diff specific commits
-If you ran the MSF exploit agains the fixed version of the plugin, what specifically would fail?
-Two files related to the vulnerability were substantially changed between the two versions
+2. Use the source browser changelog viewer to diff specific commits
+3. If you ran the MSF exploit agains the fixed version of the plugin, what
+   specifically would fail?
+4. Two files related to the vulnerability were substantially changed between the
+   two versions
 
 Answer:
 ```
