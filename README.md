@@ -368,7 +368,7 @@ lifting here: the payload is provided (even in encoded form), activating it is a
 single function call, and even the cleanup is provided as a core function. All
 the author had to do here was create and issue a multipart POST request.
 
-** Challenge **: Now that we've walked through the exploit, go back to the Reflex
+** Challenge ** : Now that we've walked through the exploit, go back to the Reflex
 Gallery plugin code and identify the fix --- specifically, what was changed in
 the plugin code to prevent this attack?
 
